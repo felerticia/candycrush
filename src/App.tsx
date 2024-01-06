@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { WIDTH, COLORS } from "./constants";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, DragEvent } from "react";
 
 function App() {
   const [candies, setCandies] = useState<string[]>([]);
+  const [dragging, setDragging] = useState<number>(-1);
+  const [dropping, setDropping] = useState<number>(-1);
 
   const createBoard = () => {
     const colors: string[] = new Array(WIDTH * WIDTH)
@@ -144,13 +146,13 @@ function App() {
     }
   }, []);
 
-  const dragStart = () => {
+  const dragStart = (e: DragEvent<HTMLDivElement>) => {
     // The item being dragged
-    console.log("dragStart");
+    setDragging(Number(e.currentTarget.getAttribute("data-id")));
   };
-  const dragDrop = () => {
+  const dragDrop = (e: DragEvent<HTMLDivElement>) => {
     // and OnDrop is a message to the dropped upon target.
-    console.log("dragDrop");
+    setDropping(Number(e.currentTarget.getAttribute("data-id")));
   };
   const dragEnd = () => {
     // Drag ends
@@ -171,6 +173,7 @@ function App() {
           <div
             key={index}
             className={candy}
+            data-id={index}
             draggable={true}
             onDragStart={dragStart}
             onDragOver={
