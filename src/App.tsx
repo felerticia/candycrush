@@ -144,6 +144,20 @@ function App() {
     }
   }, []);
 
+  const dragStart = () => {
+    // The item being dragged
+    console.log("dragStart");
+  };
+  const dragDrop = () => {
+    // and OnDrop is a message to the dropped upon target.
+    console.log("dragDrop");
+  };
+  const dragEnd = () => {
+    // Drag ends
+
+    console.log("dragEnd");
+  };
+
   useEffect(() => {
     let board = createBoard();
     board = clearDuplicates(board);
@@ -154,7 +168,26 @@ function App() {
     <div className="app">
       <div className="board">
         {candies.map((candy, index) => (
-          <div key={index} className={candy}>
+          <div
+            key={index}
+            className={candy}
+            draggable={true}
+            onDragStart={dragStart}
+            onDragOver={
+              (e) =>
+                e.preventDefault() /*when an element is being dragged over a drop target*/
+            }
+            onDragEnter={
+              (e) =>
+                e.preventDefault() /*when an element is draggable element enters a drop target*/
+            }
+            onDragLeave={
+              (e) =>
+                e.preventDefault() /*when an  element is moved out of a drop target*/
+            }
+            onDrop={dragDrop}
+            onDragEnd={dragEnd}
+          >
             {index}
           </div>
         ))}
