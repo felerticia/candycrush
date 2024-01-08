@@ -8,7 +8,7 @@ function App() {
   const [dragging, setDragging] = useState<number>(-1);
   const [dropping, setDropping] = useState<number>(-1);
 
-  const createBoard = () => {
+  const createStack = () => {
     const colors: string[] = new Array(WIDTH * WIDTH)
       .fill(0)
       .map(() => COLORS[Math.floor(Math.random() * COLORS.length)]);
@@ -16,133 +16,139 @@ function App() {
     return colors;
   };
 
-  const checkColumn = (board: string[]) => {
+  const checkColumn = (currentCandies: string[]) => {
     for (let i = 0; i <= WIDTH * (WIDTH - 4) - 1; i++) {
-      if (!board[i]) continue;
+      if (!currentCandies[i]) continue;
 
       if (
-        board[i] === board[i + WIDTH] &&
-        board[i] === board[i + WIDTH * 2] &&
-        board[i] === board[i + WIDTH * 3] &&
-        board[i] === board[i + WIDTH * 4]
+        currentCandies[i] === currentCandies[i + WIDTH] &&
+        currentCandies[i] === currentCandies[i + WIDTH * 2] &&
+        currentCandies[i] === currentCandies[i + WIDTH * 3] &&
+        currentCandies[i] === currentCandies[i + WIDTH * 4]
       ) {
-        board[i] = "";
-        board[i + WIDTH] = "";
-        board[i + WIDTH * 2] = "";
-        board[i + WIDTH * 3] = "";
-        board[i + WIDTH * 4] = "";
+        currentCandies[i] = "";
+        currentCandies[i + WIDTH] = "";
+        currentCandies[i + WIDTH * 2] = "";
+        currentCandies[i + WIDTH * 3] = "";
+        currentCandies[i + WIDTH * 4] = "";
       }
     }
 
     for (let i = 0; i <= WIDTH * (WIDTH - 3) - 1; i++) {
-      if (!board[i]) continue;
+      if (!currentCandies[i]) continue;
 
       if (
-        board[i] === board[i + WIDTH] &&
-        board[i] === board[i + WIDTH * 2] &&
-        board[i] === board[i + WIDTH * 3]
+        currentCandies[i] === currentCandies[i + WIDTH] &&
+        currentCandies[i] === currentCandies[i + WIDTH * 2] &&
+        currentCandies[i] === currentCandies[i + WIDTH * 3]
       ) {
-        board[i] = "";
-        board[i + WIDTH] = "";
-        board[i + WIDTH * 2] = "";
-        board[i + WIDTH * 3] = "";
+        currentCandies[i] = "";
+        currentCandies[i + WIDTH] = "";
+        currentCandies[i + WIDTH * 2] = "";
+        currentCandies[i + WIDTH * 3] = "";
       }
     }
 
     for (let i = 0; i <= WIDTH * (WIDTH - 2) - 1; i++) {
-      if (!board[i]) continue;
+      if (!currentCandies[i]) continue;
 
-      if (board[i] === board[i + WIDTH] && board[i] === board[i + WIDTH * 2]) {
-        board[i] = "";
-        board[i + WIDTH] = "";
-        board[i + WIDTH * 2] = "";
+      if (
+        currentCandies[i] === currentCandies[i + WIDTH] &&
+        currentCandies[i] === currentCandies[i + WIDTH * 2]
+      ) {
+        currentCandies[i] = "";
+        currentCandies[i + WIDTH] = "";
+        currentCandies[i + WIDTH * 2] = "";
       }
     }
 
-    return board;
+    return currentCandies;
   };
 
-  const checkRow = (board: string[]) => {
+  const checkRow = (currentCandies: string[]) => {
     for (let i = 0; i <= WIDTH * WIDTH - 5; i++) {
-      if (!board[i]) continue;
+      if (!currentCandies[i]) continue;
 
       if ((i % WIDTH) + 5 > WIDTH) continue;
 
       if (
-        board[i] === board[i + 1] &&
-        board[i] === board[i + 2] &&
-        board[i] === board[i + 3] &&
-        board[i] === board[i + 4]
+        currentCandies[i] === currentCandies[i + 1] &&
+        currentCandies[i] === currentCandies[i + 2] &&
+        currentCandies[i] === currentCandies[i + 3] &&
+        currentCandies[i] === currentCandies[i + 4]
       ) {
-        board[i] = "";
-        board[i + 1] = "";
-        board[i + 2] = "";
-        board[i + 3] = "";
-        board[i + 4] = "";
+        currentCandies[i] = "";
+        currentCandies[i + 1] = "";
+        currentCandies[i + 2] = "";
+        currentCandies[i + 3] = "";
+        currentCandies[i + 4] = "";
       }
     }
 
     for (let i = 0; i <= WIDTH * WIDTH - 4; i++) {
-      if (!board[i]) continue;
+      if (!currentCandies[i]) continue;
 
       if ((i % WIDTH) + 4 > WIDTH) continue;
 
       if (
-        board[i] === board[i + 1] &&
-        board[i] === board[i + 2] &&
-        board[i] === board[i + 3]
+        currentCandies[i] === currentCandies[i + 1] &&
+        currentCandies[i] === currentCandies[i + 2] &&
+        currentCandies[i] === currentCandies[i + 3]
       ) {
-        board[i] = "";
-        board[i + 1] = "";
-        board[i + 2] = "";
-        board[i + 3] = "";
+        currentCandies[i] = "";
+        currentCandies[i + 1] = "";
+        currentCandies[i + 2] = "";
+        currentCandies[i + 3] = "";
       }
     }
 
     for (let i = 0; i <= WIDTH * WIDTH - 3; i++) {
-      if (!board[i]) continue;
+      if (!currentCandies[i]) continue;
 
       if ((i % WIDTH) + 3 > WIDTH) continue;
 
-      if (board[i] === board[i + 1] && board[i] === board[i + 2]) {
-        board[i] = "";
-        board[i + 1] = "";
-        board[i + 2] = "";
+      if (
+        currentCandies[i] === currentCandies[i + 1] &&
+        currentCandies[i] === currentCandies[i + 2]
+      ) {
+        currentCandies[i] = "";
+        currentCandies[i + 1] = "";
+        currentCandies[i + 2] = "";
       }
     }
 
-    return board;
+    return currentCandies;
   };
 
-  const moveDown = (board: string[]) => {
+  const moveDown = (currentCandies: string[]) => {
     for (let i = 0; i <= WIDTH * WIDTH; i++) {
       const firstRow = [0, 1, 2, 3, 4, 5, 6, 7];
       const isFirstRow = firstRow.includes(i);
 
-      if (isFirstRow && board[i] === "") {
+      if (isFirstRow && currentCandies[i] === "") {
         const randomNumber = Math.floor(Math.random() * COLORS.length);
-        board[i] = COLORS[randomNumber];
+        currentCandies[i] = COLORS[randomNumber];
       }
 
-      if (board[i + WIDTH] === "") {
-        board[i + WIDTH] = board[i];
-        board[i] = "";
+      if (currentCandies[i + WIDTH] === "") {
+        currentCandies[i + WIDTH] = currentCandies[i];
+        currentCandies[i] = "";
       }
     }
-    return board;
+    return currentCandies;
   };
 
-  const clearDuplicates = useCallback((board: string[]) => {
+  const clearDuplicates = useCallback((currentCandies: string[]) => {
     // eslint-disable-next-line no-constant-condition
     while (true) {
-      let newBoard = [...board];
-      newBoard = checkColumn(newBoard);
-      newBoard = checkRow(newBoard);
-      newBoard = moveDown(newBoard);
-      if (board.every((cell, i) => cell === newBoard[i])) {
-        return board;
+      let nextCandies = [...currentCandies];
+      nextCandies = checkColumn(nextCandies);
+      nextCandies = checkRow(nextCandies);
+      nextCandies = moveDown(nextCandies);
+      if (currentCandies.every((cell, i) => cell === nextCandies[i])) {
+        return currentCandies;
       }
-      board = [...newBoard];
+      currentCandies = [...nextCandies];
     }
   }, []);
 
@@ -157,14 +163,59 @@ function App() {
   const dragEnd = () => {
     // Drag ends
 
-    console.log("dragEnd");
+    const isNextCell =
+      dropping === dragging - 1 ||
+      dropping === dragging + 1 ||
+      dropping === dragging - WIDTH ||
+      dropping === dragging + WIDTH;
+
+    const invalidRightEdge =
+      dragging % WIDTH === WIDTH - 1 && dropping === dragging + 1;
+
+    const invalidLeftEdge = dragging % WIDTH === 0 && dropping === dragging - 1;
+
+    const valid = isNextCell && !invalidRightEdge && !invalidLeftEdge;
+
+    if (valid) {
+      let newCandies = [...candies];
+
+      [newCandies[dragging], newCandies[dropping]] = [
+        newCandies[dropping],
+        newCandies[dragging],
+      ];
+
+      newCandies = checkColumn(newCandies);
+      newCandies = checkRow(newCandies);
+
+      if (newCandies.filter((x) => !x).length === 0) {
+        // didn't make any 3,4,5 in a row or column
+        return;
+      } else {
+        setCandies(newCandies);
+      }
+    }
   };
 
   useEffect(() => {
-    let board = createBoard();
-    board = clearDuplicates(board);
-    setCandies(board);
+    let newCandies = createStack();
+    newCandies = clearDuplicates(newCandies);
+    setCandies(newCandies);
   }, [clearDuplicates]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      let newCandies = [...candies];
+      newCandies = checkColumn(newCandies);
+      newCandies = checkRow(newCandies);
+      newCandies = moveDown(newCandies);
+
+      if (newCandies.every((b, i) => b === candies[i])) return;
+      else setCandies(newCandies);
+    }, 100);
+  }, [candies]);
+
+  const preventDefaultMethod = (e: DragEvent<HTMLDivElement>) =>
+    e.preventDefault();
 
   return (
     <div className="app">
@@ -177,16 +228,13 @@ function App() {
             draggable={true}
             onDragStart={dragStart}
             onDragOver={
-              (e) =>
-                e.preventDefault() /*when an element is being dragged over a drop target*/
+              preventDefaultMethod /*when an element is being dragged over a drop target*/
             }
             onDragEnter={
-              (e) =>
-                e.preventDefault() /*when an element is draggable element enters a drop target*/
+              preventDefaultMethod /*when an element is draggable element enters a drop target*/
             }
             onDragLeave={
-              (e) =>
-                e.preventDefault() /*when an  element is moved out of a drop target*/
+              preventDefaultMethod /*when an  element is moved out of a drop target*/
             }
             onDrop={dragDrop}
             onDragEnd={dragEnd}
